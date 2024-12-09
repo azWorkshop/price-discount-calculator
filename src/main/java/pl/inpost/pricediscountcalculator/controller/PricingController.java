@@ -1,5 +1,7 @@
 package pl.inpost.pricediscountcalculator.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +21,11 @@ public class PricingController {
         this.pricingService = pricingService;
     }
 
+    @Operation(summary = "Calculate given product price using discount policy based on product quantity")
     @GetMapping("/{id}/price")
     public ResponseEntity<BigDecimal> calculatePrice(
-            @PathVariable @NotNull(message = "Product ID is required") UUID id,
-            @RequestParam @NotNull @Positive(message = "Quantity must be greater than zero") int quantity) {
+            @Parameter(description = "id of product to be searched") @PathVariable @NotNull(message = "Product ID is required") UUID id,
+            @Parameter(description = "quantity of product to calculate discount") @RequestParam @NotNull @Positive(message = "Quantity must be greater than zero") int quantity) {
         return ResponseEntity.ok(pricingService.calculatePrice(id, quantity));
     }
 }

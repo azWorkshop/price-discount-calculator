@@ -1,5 +1,6 @@
 package pl.inpost.pricediscountcalculator.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,11 +22,13 @@ public class DiscountPolicyController {
         this.discountPolicyService = discountPolicyService;
     }
 
+    @Operation(summary = "Adds discount policy for given product based on threshold and amount")
     @PostMapping("/amount")
     public ResponseEntity<DiscountPolicy> addAmountBasedDiscount(@RequestBody @Valid AmountBasedDiscountRequest request) {
         return ResponseEntity.ok(discountPolicyService.addAmountBasedDiscount(request));
     }
 
+    @Operation(summary = "Adds discount policy for given product based on threshold and percentage")
     @PostMapping("/percentage")
     public ResponseEntity<DiscountPolicy> addPercentageBasedDiscount(@RequestBody @Valid PercentageBasedDiscountRequest request) {
         return ResponseEntity.ok(discountPolicyService.addPercentageBasedDiscount(request));
